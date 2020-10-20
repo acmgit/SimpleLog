@@ -24,7 +24,7 @@ implementation
 
         constructor Logger.create(Filename: string);
         begin
-             Assign(FileHandle, './' + Filename);      //Set Filename and Filehandle
+             Assign(FileHandle, Filename);             //Set Filename and Filehandle
              try
                 rewrite(FileHandle);                   // Open the file new for writing
                 Log('---<<<* Start of Log *>>>-----');

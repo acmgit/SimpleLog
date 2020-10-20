@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils;
 
-  type Logger = Class
+  type Logger = class(TObject)
       private
       var
             Filehandle: text;
@@ -30,20 +30,21 @@ implementation
                 Log('---<<<* Start of Log *>>>-----');
 
              finally                                   // Ups, something going wrong
-
+                                                       // Deaktivate Logging, File has a Problem
              end; // try
 
         end; // constructor()
 
         destructor Logger.done;
         begin
+             inherited;
              try
                 Log('----<<<* End of Log *>>>-----');
                 Close(Filehandle);
 
              finally
 
-             end;
+             end; // try
 
         end; // destructor
 
@@ -61,14 +62,14 @@ implementation
         var
              message: string;
         begin
-                  try
-                     message := DateTimeToStr(Now) + ': ' + Report;
-                     Writeln(Filehandle,message);
-                     flush(Filehandle);
+             try
+                message := DateTimeToStr(Now) + ': ' + Report;
+                Writeln(Filehandle,message);
+                flush(Filehandle);
 
-                  finally                       // Ups, there is something wrong ..
+             finally                       // Ups, there is something wrong ..
 
-                  end; // try
+             end; // try
 
         end; // Log(
 
